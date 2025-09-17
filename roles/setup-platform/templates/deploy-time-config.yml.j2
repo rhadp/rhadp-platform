@@ -1,0 +1,29 @@
+---
+# ConfigMap for deploy-time discovered values
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: deploy-time-config
+  namespace: "{{ gitops_namespace }}"
+  labels:
+    app.kubernetes.io/part-of: rhadp-platform
+data:
+  # Cluster-specific information discovered at deploy time
+  CLUSTER_NAME: "{{ cluster_name }}"
+  CLUSTER_DOMAIN: "{{ cluster_domain }}"
+  CLUSTER_REGION: "{{ cluster_region | default('unknown') }}"
+  
+  # Network configuration discovered from cluster
+  CLUSTER_CIDR: "{{ cluster_network_cidr | default('10.128.0.0/14') }}"
+  SERVICE_CIDR: "{{ service_network_cidr | default('172.30.0.0/16') }}"
+  
+  # OpenShift-specific values
+  OPENSHIFT_VERSION: "{{ openshift_version | default('unknown') }}"
+  CONSOLE_URL: "https://console-openshift-console.apps.{{ cluster_name }}.{{ cluster_domain }}"
+  
+  # Infrastructure details (AWS, Azure, etc.)
+  INFRASTRUCTURE_TYPE: "{{ infrastructure_type | default('unknown') }}"
+  
+  # Deployment metadata
+  DEPLOYED_AT: "{{ ansible_date_time.iso8601 }}"
+  DEPLOYED_BY: "{{ ansible_user_id | default('automation') }}"
