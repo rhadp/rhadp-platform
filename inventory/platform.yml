@@ -7,7 +7,7 @@ all:
 
     # platform deployment options
     rhadp_deploy_developer_hub: false # deploy the developer hub
-    rhadp_deploy_jumpstart: true # deploy the jumpstart operator
+    rhadp_deploy_jumpstart: false # deploy the jumpstart operator
     rhadp_deploy_builder: false # deploy the builder VMs
 
     # github secrets
@@ -26,6 +26,6 @@ all:
     jumpstarter_user_group: "jumpstarter-users"
 
     # default repo for all the GitOps apps
-    rhadp_gitops_repo_url: "https://github.com/rhadp/rhadp-platform"
+    rhadp_gitops_repo_url: "https://github.com/rhadp/rhadp-manifests"
     rhadp_gitops_repo_revision: "develop"
 
