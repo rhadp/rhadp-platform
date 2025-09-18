@@ -3,9 +3,10 @@
 
 # platform namespaces
 platform_jumpstarter_namespace: "{{ rhadp_prefix }}-jumpstarter"
+platform_exporter_namespace: "{{ rhadp_prefix }}-exporter"
 
 jumpstarter_helm_repo: "quay.io/jumpstarter-dev/helm"
 jumpstarter_helm_repo_version: "0.7.0"
 
 # qemu exporter count
-jumpstarter_qemu_exporter_count: 5
+jumpstarter_qemu_exporter_count: 2

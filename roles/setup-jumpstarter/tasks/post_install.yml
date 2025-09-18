@@ -1,3 +1,13 @@
 # Implement your post-install deployment tasks here
 # -------------------------------------------------
 
+- name: create qemu exporter assets
+  k8s:
+    definition: "{{ lookup('template', item ) | from_yaml_all }}"
+    state: present
+    apply: yes
+    kubeconfig: "{{ local_kubeconfig_file }}"
+  loop:
+    - qemu-exporter-role-binding.yaml.j2
+    - qemu-exporter-statefulset.yaml.j2
+    - qemu-exporter-client.yaml.j2

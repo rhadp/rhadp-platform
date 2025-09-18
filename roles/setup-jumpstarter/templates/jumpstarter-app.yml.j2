@@ -21,8 +21,6 @@ spec:
         jumpstarter-controller:
           grpc:
             mode: "route"
-            #endpoint: "jumpstarter-grpc.{{ platform_jumpstarter_namespace }}.svc.cluster.local:8082"
-            #routerEndpoint: "jumpstarter-router-grpc.{{ platform_jumpstarter_namespace }}.svc.cluster.local:8083"
           config:
             authentication:
               jwt:
@@ -35,7 +33,7 @@ spec:
                   claimMappings:
                     username:
                       claim: 'claims["kubernetes.io"]["namespace"]'
-                      prefix: "kubernetes:"
+                      prefix: "jmp-k8s:"
                 - issuer:
                     url: "https://keycloak-keycloak.apps.{{ cluster_base_domain }}/realms/openshift"
                     audiences:
@@ -43,7 +41,7 @@ spec:
                   claimMappings:
                     username:
                       claim: preferred_username
-                      prefix: "keycloak:"
+                      prefix: "jmp-kc:"
     repoURL: "{{ jumpstarter_helm_repo }}"
     targetRevision: "{{ jumpstarter_helm_repo_version }}"
   syncPolicy:
