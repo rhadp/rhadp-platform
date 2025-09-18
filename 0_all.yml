@@ -11,9 +11,13 @@
       include_role:
         name: roles/gather-cluster-facts
 
-    - name: bootstrap the essential devops operators e.g. gitops, pipelines, etc.
+    - name: bootstrap the essential devops operators gitops, pipelines
       include_role:
         name: roles/setup-devops
+
+    #- name: setup vault
+    #  include_role:
+    #    name: roles/setup-vault
 
     - name: bootstrap the platform components e.g. devspaces, devhub, jumpstarter, etc.
       include_role:

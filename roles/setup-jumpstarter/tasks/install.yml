@@ -1,45 +1,20 @@
 # Implement your install deployment tasks here
 # -------------------------------------------------
 
-- name: wait for rhadp-jumpstarter namespace to be ready
-  k8s_info:
-    api_version: v1
-    kind: Namespace
-    name: rhadp-jumpstarter
-    kubeconfig: "{{ local_kubeconfig_file }}"
-  register: r_namespace
-  retries: 30
-  delay: 10
-  until:
-    - r_namespace.resources | length | int > 0
-    - r_namespace.resources[0].status.phase is defined
-    - r_namespace.resources[0].status.phase == "Active"
-
-- name: create jumpstarter pre-requisites
+- name: create jumpstarter environment
   k8s:
     definition: "{{ lookup('template', item ) | from_yaml }}"
     state: present
     apply: yes
     kubeconfig: "{{ local_kubeconfig_file }}"
   loop:
-    - jumpstarter-cluster-role.yml.j2
-    - jumpstarter-cluster-role-binding.yml.j2
-    - jumpstarter-cluster-role-binding-oidc-reviewer.yml.j2
+    - jumpstarter-bootstrap-app.yml.j2
 
-#- name: create jumpstarter app project
-#  k8s:
-#    definition: "{{ lookup('template', item ) | from_yaml }}"
-#    state: present
-#    apply: yes
-#    kubeconfig: "{{ local_kubeconfig_file }}"
-#  loop:
-#    - jumpstarter-app.yml.j2
-
-- name: create jumpstarter
-  shell: |
-    helm upgrade jumpstarter --install oci://quay.io/jumpstarter-dev/helm/jumpstarter \
-        --create-namespace --namespace "{{ platform_jumpstarter_namespace }}" \
-        --set global.baseDomain="apps.{{ cluster_base_domain }}" \
-        --set global.metrics.enabled=true \
-        --set jumpstarter-controller.grpc.mode=route \
-        --version="{{ jumpstarter_helm_repo_version }}"
+- name: create jumpstarter application
+  k8s:
+    definition: "{{ lookup('template', item ) | from_yaml }}"
+    state: present
+    apply: yes
+    kubeconfig: "{{ local_kubeconfig_file }}"
+  loop:
+    - jumpstarter-app.yml.j2

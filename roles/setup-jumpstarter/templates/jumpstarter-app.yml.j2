@@ -1,0 +1,60 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: jumpstarter
+  namespace: "{{ gitops_namespace }}"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: in-cluster
+    namespace: "{{ platform_jumpstarter_namespace }}"
+  project: default
+  source:
+    chart: jumpstarter
+    helm:
+      valuesObject:
+        global:
+          baseDomain: "{{ platform_jumpstarter_namespace }}.apps.{{ cluster_base_domain }}"
+          metrics:
+            enabled: true
+        jumpstarter-controller:
+          grpc:
+            mode: "route"
+            #endpoint: "jumpstarter-grpc.{{ platform_jumpstarter_namespace }}.svc.cluster.local:8082"
+            #routerEndpoint: "jumpstarter-router-grpc.{{ platform_jumpstarter_namespace }}.svc.cluster.local:8083"
+          config:
+            authentication:
+              jwt:
+                - issuer:
+                    url: https://kubernetes.default.svc
+                    audiences:
+                      - https://kubernetes.default.svc
+                    audienceMatchPolicy: MatchAny
+                    certificateAuthority: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+                  claimMappings:
+                    username:
+                      claim: 'claims["kubernetes.io"]["namespace"]'
+                      prefix: "kubernetes:"
+                - issuer:
+                    url: "https://keycloak-keycloak.apps.{{ cluster_base_domain }}/realms/openshift"
+                    audiences:
+                      - jumpstarter-cli
+                  claimMappings:
+                    username:
+                      claim: preferred_username
+                      prefix: "keycloak:"
+    repoURL: "{{ jumpstarter_helm_repo }}"
+    targetRevision: "{{ jumpstarter_helm_repo_version }}"
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+    retry:
+      backoff:
+        duration: 5s # the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+        factor: 2 # a factor to multiply the base duration after each failed retry
+        maxDuration: 10m # the maximum amount of time allowed for the backoff strategy
+

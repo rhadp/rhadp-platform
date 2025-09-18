@@ -25,24 +25,14 @@
     - r_namespace.resources[0].status.phase is defined
     - r_namespace.resources[0].status.phase == "Active"
 
-- name: deploy additional devspaces resources
-  k8s:
-    definition: "{{ lookup('template', item ) | from_yaml }}"
-    state: present
-    apply: yes
-    kubeconfig: "{{ local_kubeconfig_file }}"
-  loop:
-    - devspaces-github-oauth-config.yml.j2
-
-# optional platform features
+#- name: deploy additional devspaces resources
+#  k8s:
+#    definition: "{{ lookup('template', item ) | from_yaml }}"
+#    state: present
+#    apply: yes
+#    kubeconfig: "{{ local_kubeconfig_file }}"
+#  loop:
+#    - devspaces-github-oauth-config.yml.j2
 
 # devhub
 
-# jumpstarter
-
-- name: setup jumpstarter
-  when: rhadp_deploy_jumpstart | bool
-  include_role:
-    name: roles/setup-jumpstarter
-
-# exporter
