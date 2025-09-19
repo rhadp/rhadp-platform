@@ -1,9 +1,11 @@
 all:
   # default values that control the development platform deployment
   vars:
-    # cloud provider selection and cluster basics. these MUST match the topology used to provision the underlying cluster
+    # cloud provider selection and cluster basics.
+    # these MUST match the topology used to provision the underlying cluster !
     cloud_provider: "aws" # aws, azure, gcp
     cluster_name: "rhadp" # used in e.g. namespace creation
+    cluster_topology: "default" # default, compact, metal
 
     # platform deployment options
     rhadp_deploy_developer_hub: false # deploy the developer hub
@@ -12,8 +14,8 @@ all:
 
     # github secrets
     github_endpoint: "https://github.com"
-    github_git_client_id: "Ov23liaveZoyF3HWFu5n"
-    github_git_client_secret: "b8df57af15c7fe0933d158488d9e9d34afbf5418"
+    github_git_client_id: "abc123"
+    github_git_client_secret: "abc123"
     
     # resource prefix
     rhadp_prefix: "rhadp" # used in e.g. namespace creation
