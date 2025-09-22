@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: "jumpstarter-bootstrap"
+  name: "jumpstarter-qemu-exporter"
   namespace: "{{ gitops_namespace }}"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -13,12 +13,12 @@ spec:
   source:
     directory:
       recurse: false
-    path: apps/jumpstarter-bootstrap
+    path: apps/jumpstarter-qemu
     repoURL: "{{ rhadp_gitops_repo_url }}"
     targetRevision: "{{ rhadp_gitops_repo_revision }}"
   destination:
     server: https://kubernetes.default.svc
-    namespace: "{{ platform_jumpstarter_namespace }}"
+    namespace: "{{ platform_exporter_namespace }}"
   syncPolicy:
     automated:
       selfHeal: true

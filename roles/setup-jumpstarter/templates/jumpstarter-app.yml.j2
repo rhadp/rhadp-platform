@@ -9,7 +9,7 @@ spec:
   destination:
     name: in-cluster
     namespace: "{{ platform_jumpstarter_namespace }}"
-  project: default
+  project: rhadp
   source:
     chart: jumpstarter
     helm:
@@ -33,7 +33,14 @@ spec:
                   claimMappings:
                     username:
                       expression: '"kubernetes:" + claims["kubernetes.io"]["namespace"]'
-                      prefix: "jmp-k8s:"
+                - issuer:
+                    url: "https://keycloak-keycloak.apps.{{ cluster_base_domain }}/realms/openshift"
+                    audiences:
+                      - jumpstarter-cli
+                  claimMappings:
+                    username:
+                      claim: preferred_username
+                      prefix: "jmp-kc:"
     repoURL: "{{ jumpstarter_helm_repo }}"
     targetRevision: "{{ jumpstarter_helm_repo_version }}"
   syncPolicy:

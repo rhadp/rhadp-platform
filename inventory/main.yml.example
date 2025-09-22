@@ -31,3 +31,4 @@ all:
     rhadp_gitops_repo_url: "https://github.com/rhadp/rhadp-manifests"
     rhadp_gitops_repo_revision: "develop"
 
+# OVERRIDES
