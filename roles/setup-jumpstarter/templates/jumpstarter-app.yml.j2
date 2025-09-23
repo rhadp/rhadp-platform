@@ -22,6 +22,8 @@ spec:
           grpc:
             mode: "route"
           config:
+            provisioning:
+              enabled: false # disable auto-provisioning, it's buggy
             authentication:
               jwt:
                 - issuer:
@@ -37,10 +39,12 @@ spec:
                     url: "https://keycloak-keycloak.apps.{{ cluster_base_domain }}/realms/openshift"
                     audiences:
                       - jumpstarter-cli
+                    certificateAuthority: |
+{{ r_ingress_cert['content'] | b64decode | indent(22, true) }}
                   claimMappings:
                     username:
                       claim: preferred_username
-                      prefix: "jmp-kc:"
+                      prefix: "jmp:"
     repoURL: "{{ jumpstarter_helm_repo }}"
     targetRevision: "{{ jumpstarter_helm_repo_version }}"
   syncPolicy:
