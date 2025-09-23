@@ -30,21 +30,12 @@ spec:
                     url: https://kubernetes.default.svc
                     audiences:
                       - https://kubernetes.default.svc
+                      - jumpstarter-cli
                     audienceMatchPolicy: MatchAny
                     certificateAuthority: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
                   claimMappings:
                     username:
                       expression: '"kubernetes:" + claims["kubernetes.io"]["namespace"]'
-                - issuer:
-                    url: "https://keycloak-keycloak.apps.{{ cluster_base_domain }}/realms/openshift"
-                    audiences:
-                      - jumpstarter-cli
-                    certificateAuthority: |
-{{ r_ingress_cert['content'] | b64decode | indent(22, true) }}
-                  claimMappings:
-                    username:
-                      claim: preferred_username
-                      prefix: "jmp:"
     repoURL: "{{ jumpstarter_helm_repo }}"
     targetRevision: "{{ jumpstarter_helm_repo_version }}"
   syncPolicy:

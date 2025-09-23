@@ -31,17 +31,6 @@
         create_operator_namespace: true
         create_operator_group: true
 
-    #- name: create developer hub namespace
-    #  k8s:
-    #    kind: Namespace
-    #    name: "{{ platform_developer_hub_namespace }}"
-    #    definition:
-    #      metadata:
-    #        labels:
-    #          argocd.argoproj.io/managed-by: openshift-gitops
-    #    state: present
-    #    apply: yes
-    #    kubeconfig: "{{ local_kubeconfig_file }}"
 
 
   
