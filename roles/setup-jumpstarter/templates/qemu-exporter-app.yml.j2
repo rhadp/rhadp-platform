@@ -18,7 +18,7 @@ spec:
     targetRevision: "{{ rhadp_gitops_repo_revision }}"
   destination:
     server: https://kubernetes.default.svc
-    namespace: "{{ platform_exporter_namespace }}"
+    namespace: "{{ platform_jumpstarter_namespace }}"
   syncPolicy:
     automated:
       selfHeal: true
