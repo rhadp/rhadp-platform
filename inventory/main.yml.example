@@ -12,23 +12,34 @@ all:
     rhadp_deploy_jumpstart: false # deploy the jumpstart operator
     rhadp_deploy_builder: false # deploy the builder VMs
 
-    # github secrets
+    # github org to configure
+    github_org: "rhadp-examples"
+    
+    # github auth secrets
     github_endpoint: "https://github.com"
     github_git_client_id: "abc123"
     github_git_client_secret: "abc123"
     
+    # github api token for e.g. setting up a runner
+    github_api_pat: "abc123"
+
+    # add cloud credentials in case you want to provision standalone builder instances
+    # see rhadp-bootstrap/inventory/main.yml.example
+    
     # resource prefix
     rhadp_prefix: "rhadp" # used in e.g. namespace creation
-
-    # default namespaces
-    gitops_namespace: "openshift-gitops" # namespace of the system gitops instance
-    
-    # default jumpstarter groups
-    jumpstarter_admin_group: "jumpstarter-admins"
-    jumpstarter_user_group: "jumpstarter-users"
 
     # default repo for all the GitOps apps
     rhadp_gitops_repo_url: "https://github.com/rhadp/rhadp-manifests"
     rhadp_gitops_repo_revision: "develop"
+
+    # default platform namespaces
+    platform_devspaces_namespace: "{{ rhadp_prefix }}-devspaces"
+    platform_developer_hub_namespace: "{{ rhadp_prefix }}-devhub"
+    platform_builder_namespace: "{{ rhadp_prefix }}-builder"
+    platform_jumpstarter_namespace: "{{ rhadp_prefix }}-jumpstarter"
+
+    # default cluster namespaces
+    gitops_namespace: "openshift-gitops" # namespace of the cluster gitops instance
 
 # OVERRIDES

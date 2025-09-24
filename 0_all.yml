@@ -15,10 +15,6 @@
       include_role:
         name: roles/setup-devops
 
-    #- name: setup vault
-    #  include_role:
-    #    name: roles/setup-vault
-
     - name: bootstrap the core platform components e.g. devspaces, devhub, etc.
       include_role:
         name: roles/setup-platform

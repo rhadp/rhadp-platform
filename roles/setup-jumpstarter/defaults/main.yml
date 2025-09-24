@@ -1,9 +1,6 @@
 ---
 # defaults
 
-# platform namespaces
-platform_jumpstarter_namespace: "{{ rhadp_prefix }}-jumpstarter"
-
 jumpstarter_helm_repo: "quay.io/jumpstarter-dev/helm"
 jumpstarter_helm_repo_version: "0.7.0"
 
