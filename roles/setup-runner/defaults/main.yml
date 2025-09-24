@@ -11,7 +11,7 @@ images_dir: "images"
 # github specific variables
 github_runner_group: "aib-runners"
 github_runner_labels: "self-hosted,arm64,aib"
-github_runner_version: "2.328.0"
+github_runner_version: "2.328.0" # see https://github.com/actions/runner/releases for the latest version
 github_runner_dir: "github-runner"
 
 # automotive-image-builder

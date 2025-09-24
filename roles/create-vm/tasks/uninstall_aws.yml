@@ -169,7 +169,7 @@
 
 - name: delete key pair
   amazon.aws.ec2_key:
-    name: "{{ ssh_key_name }}"
+    name: "{{ ssh_public_key_name }}"
     state: absent
     aws_access_key: "{{ aws_access_key_id }}"
     aws_secret_key: "{{ aws_secret_access_key }}"
