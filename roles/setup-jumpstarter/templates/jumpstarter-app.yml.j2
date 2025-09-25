@@ -30,12 +30,11 @@ spec:
                     url: https://kubernetes.default.svc
                     audiences:
                       - https://kubernetes.default.svc
-                      - jumpstarter-cli
-                    audienceMatchPolicy: MatchAny
                     certificateAuthority: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
                   claimMappings:
                     username:
                       expression: '"kubernetes:" + claims["kubernetes.io"]["namespace"]'
+
     repoURL: "{{ jumpstarter_helm_repo }}"
     targetRevision: "{{ jumpstarter_helm_repo_version }}"
   syncPolicy:
